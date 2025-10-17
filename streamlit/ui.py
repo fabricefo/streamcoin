@@ -41,7 +41,7 @@ elif options == "Données":
     if conn:
         try:
             # Requête SQL pour récupérer des données
-            query = "SELECT id, libelle, range_debut, range_fin FROM vlan LIMIT 10;"  # Remplacez par votre table et colonnes
+            query = "SELECT cryptoid, cryptoname, lastprice, amount, total FROM portfolio;"
             db_data = pd.read_sql_query(query, conn)
 
             # Ajouter les données SQL à la DataFrame existante

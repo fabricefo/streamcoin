@@ -32,7 +32,7 @@ def read_root():
     return {"message": "Bienvenue dans l'API FastAPI Starter avec PostgreSQL!"}
 
 # Route pour récupérer tous les items
-@app.get("/items", response_model=List[Item])
+@app.get("/items")
 async def get_all_items_route():
     items = read_all_items()
     return items

@@ -1,11 +1,11 @@
 import psycopg2
 
 # Récupérer les informations de connexion depuis les variables d'environnement
-DB_HOST = "localhost"
+DB_HOST = "postgres"
 DB_NAME = "crypto"
 DB_USER = "api"
 DB_PASSWORD = "$8{(6oPd{0@+><UXZ3eg"
-DB_PORT = "5032"
+DB_PORT = "5432"
 
 # Fonction pour se connecter à PostgreSQL
 def get_connection():

@@ -1,5 +1,6 @@
 import psycopg2
 from psycopg2 import sql
+from psycopg2.extras import RealDictCursor
 import json
 
 # Importer la fonction get_connection depuis config.py

@@ -3,12 +3,7 @@ from pydantic import BaseModel
 from typing import List
 from sqlalchemy.ext.asyncio import AsyncSession
 from db import read_all_items, update_item  # Importer la fonction depuis db.py
-import sys
 import httpx
-from pathlib import Path
-
-# Ajouter le répertoire parent au chemin Python
-sys.path.append(str(Path(__file__).resolve().parent.parent / "config"))
 
 # Importer la fonction get_connection depuis utils.py
 from config import get_db

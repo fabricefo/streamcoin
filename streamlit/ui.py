@@ -2,14 +2,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import sys
-from pathlib import Path
 
-# Ajouter le répertoire parent au chemin Python
-sys.path.append(str(Path(__file__).resolve().parent.parent / "utils"))
-
-# Importer la fonction get_connection depuis utils.py
-from utils import get_connection
+# Importer la fonction get_connection depuis config.py
+from config import get_connection
 
 # Configuration de la page
 st.set_page_config(

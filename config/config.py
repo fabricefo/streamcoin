@@ -14,7 +14,7 @@ load_dotenv()
 # Récupérer les informations de connexion depuis les variables d'environnement
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_NAME = os.getenv("DB_NAME", "test")
-DB_USER = os.getenv("DB_USER", "teklinewriter")
+DB_USER = os.getenv("DB_USER", "test")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "password")
 DB_PORT = os.getenv("DB_PORT", "5432")
 

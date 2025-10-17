@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from typing import List
 from db import read_all_items, update_item  # Importer la fonction depuis db.py
 import httpx
+import json
 
 # Créer une instance de l'application FastAPI
 app = FastAPI(
@@ -71,9 +72,10 @@ async def main_route():
     # Trace console pour afficher les items récupérés
     print("=== Items Récupérés ===")
     print(items)
+    data = json.loads(items)
 
     # Extraire les valeurs de 'coingeckoid' depuis les items
-    cryptos = [item.coingeckoid for item in items]
+    cryptos = [item["coingeckoid"] for item in data]
     # Trace console pour afficher les cryptos extraites
     print("=== Cryptos ===")
     print(cryptos)
@@ -91,9 +93,9 @@ async def main_route():
     crypto_total = 0
 
     # Parcourir les items et effectuer les calculs
-    for item in items:
+    for item in data:
         # Récupérer le prix USD depuis l'API CoinGecko
-        price_usd = crypto_prices.get(item.coingeckoid, {}).get("usd", 0)
+        price_usd = crypto_prices.get(item[".coingeckoid"], {}).get("usd", 0)
 
         # Calculer la valeur totale (amount * usd)
         total = item.amount * price_usd if item.amount else 0
@@ -101,16 +103,16 @@ async def main_route():
         crypto_total += total
 
         # Mettre à jour la valeur lastprice dans la base de données
-        update_item(int(item.cryptoid), {"lastprice": price_usd})
-        update_item(int(item.cryptoid), {"total": total})
+        update_item(int(item["cryptoid"]), {"lastprice": price_usd})
+        update_item(int(item["cryptoid"]), {"total": total})
 
         # Comparer le prix avec les alertes
         if item.alert3 and price_usd >= item.alert3:
-            alerts.append(f"Crypto {item.cryptoname} a atteint l'alerte 3 avec un prix de {price_usd} USD")
+            alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 3 avec un prix de {price_usd} USD")
         elif item.alert2 and price_usd >= item.alert2:
-            alerts.append(f"Crypto {item.cryptoname} a atteint l'alerte 2 avec un prix de {price_usd} USD")
+            alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 2 avec un prix de {price_usd} USD")
         elif item.alert1 and price_usd >= item.alert1:
-            alerts.append(f"Crypto {item.cryptoname} a atteint l'alerte 1 avec un prix de {price_usd} USD")
+            alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 1 avec un prix de {price_usd} USD")
 
     print("=== Fin de la boucle ===")
     print(f"Total des cryptos : {crypto_total}")

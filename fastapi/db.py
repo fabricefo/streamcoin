@@ -1,11 +1,10 @@
 import psycopg2
-from psycopg2.extras import sql
+from psycopg2 import sql
 import json
 
 # Importer la fonction get_connection depuis config.py
 from config import get_connection
-
-        
+       
 
 # Fonction pour lire tous les éléments
 def read_all_items():

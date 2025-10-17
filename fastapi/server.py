@@ -95,7 +95,7 @@ async def main_route():
     # Parcourir les items et effectuer les calculs
     for item in data:
         # Récupérer le prix USD depuis l'API CoinGecko
-        price_usd = crypto_prices.get(item[".coingeckoid"], {}).get("usd", 0)
+        price_usd = crypto_prices.get(item["coingeckoid"], {}).get("usd", 0)
 
         # Calculer la valeur totale (amount * usd)
         total = item.amount * price_usd if item.amount else 0

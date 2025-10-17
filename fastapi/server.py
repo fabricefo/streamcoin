@@ -60,7 +60,7 @@ async def get_crypto_prices(cryptos: List[str] = ["bitcoin", "ethereum", "liteco
 
 # Route principale 
 @app.get("/main")
-async def main_route(db: AsyncSession = Depends(get_db)):
+async def main_route():
     """
     Route principale qui récupère les items depuis la base de données,
     les prix des cryptomonnaies correspondantes, et effectue des calculs et mises à jour.

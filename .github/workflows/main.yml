@@ -44,7 +44,7 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
             if [ ! -d "/opt/streamcoin" ]; then
-              git clone https://github.com/ffourel/streamcoin.git /opt/streamcoin
+              git clone https://github.com/fabricefo/streamcoin.git /opt/streamcoin
             else
               cd /opt/streamcoin
               git pull origin main

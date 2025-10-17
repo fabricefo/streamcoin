@@ -20,3 +20,6 @@ services:
 networks:
   deploy_network:
     driver: bridge
+  postgresql_default:
+    external:
+      name: postgresql_default

@@ -6,6 +6,12 @@ on:
     branches:
       - main
 
+env:
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+  DB_USER: ${{ secrets.DB_USER }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_PORT: ${{ secrets.DB_PORT }} 
 
 jobs:
   build_and_push:
@@ -24,6 +30,12 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./streamlit
+          build-args: |
+            DB_HOST=${{ secrets.DB_HOST }}
+            DB_NAME=${{ secrets.DB_NAME }}
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DB_PORT=${{ secrets.DB_PORT }}
           push: true 
           file: ./streamlit/Dockerfile
           tags: ffourel/streamlit_app:latest
@@ -32,6 +44,12 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./fastapi
+          build-args: |
+            DB_HOST=${{ secrets.DB_HOST }}
+            DB_NAME=${{ secrets.DB_NAME }}
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DB_PORT=${{ secrets.DB_PORT }}
           push: true 
           file: ./streamlit/Dockerfile
           tags: ffourel/fastapi_app:latest

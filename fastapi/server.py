@@ -98,7 +98,7 @@ async def main_route():
         price_usd = crypto_prices.get(item["coingeckoid"], {}).get("usd", 0)
 
         # Calculer la valeur totale (amount * usd)
-        total = item.amount * price_usd if item.amount else 0
+        total = item["amount"] * price_usd if item["amount"] else 0
         # Ajouter au total global
         crypto_total += total
 

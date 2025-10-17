@@ -51,7 +51,7 @@ jobs:
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             DB_PORT=${{ secrets.DB_PORT }}
           push: true 
-          file: ./streamlit/Dockerfile
+          file: ./fastapi/Dockerfile
           tags: ffourel/fastapi_app:latest
           
       - name: Deploy to VPS

@@ -107,11 +107,11 @@ async def main_route():
         update_item(int(item["cryptoid"]), {"total": total})
 
         # Comparer le prix avec les alertes
-        if item.alert3 and price_usd >= item.alert3:
+        if item["alert3"] and price_usd >= item["alert3"]:
             alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 3 avec un prix de {price_usd} USD")
-        elif item.alert2 and price_usd >= item.alert2:
+        elif item["alert2"] and price_usd >= item["alert2"]:
             alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 2 avec un prix de {price_usd} USD")
-        elif item.alert1 and price_usd >= item.alert1:
+        elif item["alert1"] and price_usd >= item["alert1"]:
             alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 1 avec un prix de {price_usd} USD")
 
     print("=== Fin de la boucle ===")

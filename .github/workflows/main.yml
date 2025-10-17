@@ -19,11 +19,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Build and push Docker image
+      - name: Build and push Docker image for Streamlit app
         run: |
-          docker build -t username/repo_name:latest .
-          docker push username/repo_name:latest
-      
+          docker build -t ffourel/streamcoinapp:latest .
+          docker push ffourel/streamcoinapp:latest
+
+      - name: Build and push Docker image for FastApi 
+        run: |
+          docker build -t ffourel/streamcoinapi:latest .
+          docker push ffourel/streamcoinapi:latest
+          
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
         with:
@@ -31,6 +36,6 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
-            docker pull username/repo_name:latest
+            docker pull ffourel/github_containers:latest
             cd repo_name
             docker-compose up -d --build

@@ -73,4 +73,4 @@ jobs:
             docker pull ffourel/streamlit_app:latest
             docker pull ffourel/fastapi_app:latest
 
-            docker-compose up -d --build
+            docker compose up -d --build

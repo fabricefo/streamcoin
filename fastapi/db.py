@@ -30,11 +30,11 @@ def read_all_items():
             return items
 
 # Fonction pour mettre à jour un élément
-def update_item(coingeckoid, **kwargs):
+def update_item(cryptoid, **kwargs):
     set_clause = ", ".join([f"{key} = %s" for key in kwargs.keys()])
-    values = list(kwargs.values())  + [coingeckoid]
+    values = list(kwargs.values())  + [cryptoid]
 
-    query = sql.SQL("UPDATE portfolio SET {} WHERE coingeckoid = %s").format(
+    query = sql.SQL("UPDATE portfolio SET {} WHERE cryptoid = %s").format(
         sql.SQL(set_clause)
     )
 

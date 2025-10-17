@@ -1,12 +1,8 @@
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 from typing import List
-from sqlalchemy.ext.asyncio import AsyncSession
 from db import read_all_items, update_item  # Importer la fonction depuis db.py
 import httpx
-
-# Importer la fonction get_connection depuis utils.py
-from config import get_db
 
 # Créer une instance de l'application FastAPI
 app = FastAPI(
@@ -37,8 +33,8 @@ def read_root():
 
 # Route pour récupérer tous les items
 @app.get("/items", response_model=List[Item])
-async def get_all_items_route(db: AsyncSession = Depends(get_db)):
-    items = await read_all_items(db)
+async def get_all_items_route():
+    items = await read_all_items()
     return items
 
 # Fonction pour récupérer les prix des cryptomonnaies
@@ -70,7 +66,7 @@ async def main_route(db: AsyncSession = Depends(get_db)):
     les prix des cryptomonnaies correspondantes, et effectue des calculs et mises à jour.
     """
     # Appeler la fonction read_all_items pour récupérer les items
-    items = await read_all_items(db)
+    items = await read_all_items()
 
     # Trace console pour afficher les items récupérés
     print("=== Items Récupérés ===")
@@ -105,8 +101,8 @@ async def main_route(db: AsyncSession = Depends(get_db)):
         crypto_total += total
 
         # Mettre à jour la valeur lastprice dans la base de données
-        await update_item(db, int(item.cryptoid), {"lastprice": price_usd})
-        await update_item(db, int(item.cryptoid), {"total": total})
+        await update_item(int(item.cryptoid), {"lastprice": price_usd})
+        await update_item(int(item.cryptoid), {"total": total})
 
         # Comparer le prix avec les alertes
         if item.alert3 and price_usd >= item.alert3:

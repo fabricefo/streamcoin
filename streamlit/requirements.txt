@@ -8,3 +8,4 @@ httpx==0.24.1
 pandas==2.1.0
 matplotlib==3.8.0
 numpy==1.26.4
+psycopg2-binary==2.9.7

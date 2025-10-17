@@ -7,7 +7,7 @@ services:
       - 8502:8000
     networks:
       - deploy_network
-    container_name: streamcoinapi
+    container_name: streamlit_app
 
   streamlit:
     build: streamlit/
@@ -17,7 +17,7 @@ services:
         - 8501:8501
     networks:
       - deploy_network
-    container_name: streamcoinapp
+    container_name: fastapi_app
 
 networks:
   deploy_network:

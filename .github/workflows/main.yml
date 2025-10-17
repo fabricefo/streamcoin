@@ -21,14 +21,20 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
       - name: Build and push Docker image for Streamlit app
-        run: |
-          docker build -t ffourel/streamlit_app:latest /streamlit
-          docker push ffourel/streamlit_app:latest
+        uses: docker/build-push-action@v2
+        with:
+          context: ./streamlit
+          push: true 
+          file: ./streamlit/Dockerfile
+          tags: ffourel/streamlit_app:latest
 
-      - name: Build and push Docker image for FastApi 
-        run: |
-          docker build -t ffourel/fastapi_app:latest /fastapi
-          docker push ffourel/fastapi_app:latest
+      - name: Build and push Docker image for Streamlit app
+        uses: docker/build-push-action@v2
+        with:
+          context: ./streamlit
+          push: true 
+          file: ./streamlit/Dockerfile
+          tags: ffourel/streamlit_app:latest
           
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master

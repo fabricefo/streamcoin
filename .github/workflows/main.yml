@@ -28,13 +28,13 @@ jobs:
           file: ./streamlit/Dockerfile
           tags: ffourel/streamlit_app:latest
 
-      - name: Build and push Docker image for Streamlit app
+      - name: Build and push Docker image for FastAPI app
         uses: docker/build-push-action@v2
         with:
-          context: ./streamlit
+          context: ./fastapi
           push: true 
           file: ./streamlit/Dockerfile
-          tags: ffourel/streamlit_app:latest
+          tags: ffourel/fastapi_app:latest
           
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master

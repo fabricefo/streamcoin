@@ -4,3 +4,4 @@ pydantic==1.10.9
 python-dotenv==1.0.0
 httpx==0.24.1
 psycopg2-binary==2.9.7
+json==2.0.9

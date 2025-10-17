@@ -34,7 +34,7 @@ def read_root():
 # Route pour récupérer tous les items
 @app.get("/items", response_model=List[Item])
 async def get_all_items_route():
-    items = await read_all_items()
+    items = read_all_items()
     return items
 
 # Fonction pour récupérer les prix des cryptomonnaies
@@ -66,7 +66,7 @@ async def main_route():
     les prix des cryptomonnaies correspondantes, et effectue des calculs et mises à jour.
     """
     # Appeler la fonction read_all_items pour récupérer les items
-    items = await read_all_items()
+    items = read_all_items()
 
     # Trace console pour afficher les items récupérés
     print("=== Items Récupérés ===")
@@ -101,8 +101,8 @@ async def main_route():
         crypto_total += total
 
         # Mettre à jour la valeur lastprice dans la base de données
-        await update_item(int(item.cryptoid), {"lastprice": price_usd})
-        await update_item(int(item.cryptoid), {"total": total})
+        update_item(int(item.cryptoid), {"lastprice": price_usd})
+        update_item(int(item.cryptoid), {"total": total})
 
         # Comparer le prix avec les alertes
         if item.alert3 and price_usd >= item.alert3:

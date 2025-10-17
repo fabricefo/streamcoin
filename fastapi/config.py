@@ -18,11 +18,11 @@ load_dotenv()
 # DB_PASSWORD = os.getenv("DB_PASSWORD", "password")
 # DB_PORT = os.getenv("DB_PORT", "5432")
 
-DB_HOST = "localhost"
+DB_HOST = "postgres"
 DB_NAME = "crypto"
 DB_USER = "root"
 DB_PASSWORD = os.getenv("DB_PASSWORD", "password")
-DB_PORT = "5032"
+DB_PORT = "5432"
 
 # URL de connexion pour SQLAlchemy
 DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"

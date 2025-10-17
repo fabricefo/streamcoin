@@ -5,6 +5,7 @@ services:
       - 8502:8000
     networks:
       - deploy_network
+      - postgresql_default
     container_name: streamcoinapi
 
   streamlit:
@@ -13,6 +14,7 @@ services:
         - 8501:8501
     networks:
       - deploy_network
+      - postgresql_default
     container_name: streamcoinapp
 
 networks:

@@ -6,9 +6,6 @@ on:
     branches:
       - main
 
-env:
-  DB_PASSWORD: "${{ secrets.DB_PASSWORD }}"
-
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
@@ -26,8 +23,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./streamlit
-          build-args: |
-            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
           push: true 
           file: ./streamlit/Dockerfile
           tags: ffourel/streamlit_app:latest
@@ -36,8 +31,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./fastapi
-          build-args: |
-            DB_PASSWORD="${{ secrets.DB_PASSWORD }}"
           push: true 
           file: ./fastapi/Dockerfile
           tags: ffourel/fastapi_app:latest

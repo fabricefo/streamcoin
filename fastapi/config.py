@@ -20,8 +20,8 @@ load_dotenv()
 
 DB_HOST = "postgres"
 DB_NAME = "crypto"
-DB_USER = "root"
-DB_PASSWORD = os.getenv("DB_PASSWORD", "password")
+DB_USER = "api"
+DB_PASSWORD = "$8{(6oPd{0@+><UXZ3eg"
 DB_PORT = "5432"
 
 # URL de connexion pour SQLAlchemy

@@ -31,20 +31,7 @@ DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT
 engine = create_async_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
-# Fonction pour se connecter à PostgreSQL
-def get_connection():
-    try:
-        conn = psycopg2.connect(
-            host=DB_HOST,
-            database=DB_NAME,
-            user=DB_USER,
-            password=DB_PASSWORD,
-            port=DB_PORT,
-        )
-        return conn
-    except Exception as e:
-        raise Exception(f"Erreur de connexion à la base de données : {e}")
-    
+  
 # Fonction pour obtenir une session de base de données avec SQLAlchemy
 async def get_db():
     async with SessionLocal() as session:

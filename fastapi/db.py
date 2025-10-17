@@ -1,13 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.sql import text
-from sqlalchemy import Column, Integer, String, Float, Numeric
-import sys
-from pathlib import Path
+from sqlalchemy import Column, Integer, String, Float
 import asyncio
-
-# Ajouter le répertoire parent au chemin Python
-sys.path.append(str(Path(__file__).resolve().parent.parent / "config"))
 
 # Importer la fonction get_connection depuis utils.py
 from config import Base, get_db

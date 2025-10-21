@@ -133,8 +133,6 @@ async def alerts_route():
     # Parcourir les items et effectuer les calculs
     for item in data:
 
-
-
          # Comparer le prix avec les alertes
         if item["alert3"] and item["lastprice"] >= item["alert3"]:
             alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 3 avec un prix de {item["lastprice"]} USD")

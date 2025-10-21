@@ -135,11 +135,11 @@ async def alerts_route():
 
          # Comparer le prix avec les alertes
         if item["alert3"] and item["lastprice"] >= item["alert3"]:
-            alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 3 avec un prix de {item["lastprice"]} USD")
+            alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 3 avec un prix de {item['lastprice']} USD")
         elif item["alert2"] and item["lastprice"] >= item["alert2"]:
-            alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 2 avec un prix de {item["lastprice"]} USD")
+            alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 2 avec un prix de {item['lastprice']} USD")
         elif item["alert1"] and item["lastprice"] >= item["alert1"]:
-            alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 1 avec un prix de {item["lastprice"]} USD")
+            alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 1 avec un prix de {item['lastprice']} USD")
 
     print("=== Fin de la boucle ===")
     print(f"Alertes générées : {alerts}")

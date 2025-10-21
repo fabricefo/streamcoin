@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import squarify
+import plotly.express as px
 
 # Importer la fonction get_connection depuis config.py
 from config import get_connection
@@ -15,7 +17,7 @@ st.set_page_config(
 
 # Sidebar
 st.sidebar.title("Navigation")
-options = st.sidebar.radio("Aller à", ["Accueil", "Données", "Visualisation"])
+options = st.sidebar.radio("Aller à", ["Accueil", "Données", "Cryptos (Plotly)"])
 
 # Accueil
 if options == "Accueil":
@@ -61,22 +63,31 @@ elif options == "Données":
         mime="text/csv",
     )
 
-# Visualisation
-elif options == "Visualisation":
-    st.title("Visualisation des Données")
-    st.write("Voici un exemple de graphique simple :")
+# Cryptos (Plotly)
+elif options == "Cryptos (Plotly)":
+    st.title("Visualisation des Cryptomonnaies avec Plotly")
+    st.write("Contenu du portfolio par possessions :")
 
-    # Générer des données pour le graphique
-    x = np.linspace(0, 10, 100)
-    y = np.sin(x)
+    # Connexion à la base de données
+    conn = get_connection()
+    if conn:
+        try:
+            # Requête SQL pour récupérer des données
+            query = "SELECT cryptoid, cryptoname, total FROM portfolio;"
+            db_data = pd.read_sql_query(query, conn)
 
-    # Créer le graphique
-    fig, ax = plt.subplots()
-    ax.plot(x, y, label="sin(x)")
-    ax.set_title("Graphique de sin(x)")
-    ax.set_xlabel("x")
-    ax.set_ylabel("sin(x)")
-    ax.legend()
+        except Exception as e:
+            st.error(f"Erreur lors de l'exécution de la requête SQL : {e}")
+        finally:
+            conn.close()
 
-    # Afficher le graphique
-    st.pyplot(fig)
+    # Créer le treemap avec Plotly
+    fig = px.treemap(
+        db_data,
+        path=['cryptoname'],
+        values='total',
+        title="Treemap des Cryptomonnaies avec Plotly"
+    )
+
+    # Afficher le treemap
+    st.plotly_chart(fig)

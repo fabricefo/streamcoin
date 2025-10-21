@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 from typing import List
-from db import read_all_items, update_item  # Importer la fonction depuis db.py
+from db import read_all_items, update_item, get_top5_cryptos  # Importer la fonction depuis db.py
 import httpx
 import json
 
@@ -149,3 +149,12 @@ async def alerts_route():
         "alerts": alerts,
     }
 
+
+# Route Top5   
+@app.get("/top5")
+async def top5_route():
+    """
+    Route pour récupérer le Top 5 des cryptomonnaies par total décroissant.
+    """
+    top5 = get_top5_cryptos()
+    return top5

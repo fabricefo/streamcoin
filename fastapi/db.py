@@ -31,6 +31,15 @@ def update_item(cryptoid, **kwargs):
             conn.commit()
             return cur.rowcount
 
+# Fonction pour lister le Top 5 des cryptomonnaies par total décroissant
+def get_top5_cryptos():
+    query = "SELECT * FROM portfolio ORDER BY total DESC LIMIT 5"
+    with get_connection() as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+            cur.execute(query)
+            rows = cur.fetchall()
+            return json.dumps(rows, indent=4, default=str)
+
 # Tester la fonction read_all_items
 if __name__ == "__main__":
     items = read_all_items()

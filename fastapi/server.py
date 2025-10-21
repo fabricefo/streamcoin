@@ -20,6 +20,8 @@ class Item(BaseModel):
     alert1: float 
     alert2: float 
     alert3: float 
+    alert4: float
+    alert5: float
     lastprice: float 
     amount: float 
     total: float 
@@ -58,13 +60,11 @@ async def get_crypto_prices(cryptos: List[str] = ["bitcoin", "ethereum", "liteco
 
     return response.json()
 
-
-# Route principale 
-@app.get("/main")
-async def main_route():
+# Route Update prices
+@app.get("/updateprices")
+async def update_prices_route():
     """
-    Route principale qui récupère les items depuis la base de données,
-    les prix des cryptomonnaies correspondantes, et effectue des calculs et mises à jour.
+    Route pour mettre à jour les prix des cryptomonnaies.
     """
     # Appeler la fonction read_all_items pour récupérer les items
     items = read_all_items()
@@ -84,45 +84,69 @@ async def main_route():
     crypto_prices = await get_crypto_prices(cryptos)
     # Trace console pour afficher crypto_prices
     print("=== Crypto Prices ===")
-    print(crypto_prices)
+    #print(crypto_prices)
 
-    # Initialiser une liste pour stocker les alertes
-    alerts = []
-
-   # Initialiser la somme totale
-    crypto_total = 0
+    # Initialiser la somme totale
+    crypto_total = float(0)
 
     # Parcourir les items et effectuer les calculs
     for item in data:
         # Récupérer le prix USD depuis l'API CoinGecko
-        price_usd = crypto_prices.get(item[".coingeckoid"], {}).get("usd", 0)
+        price_usd = crypto_prices.get(item["coingeckoid"], {}).get("usd", 0)
 
         # Calculer la valeur totale (amount * usd)
-        total = item.amount * price_usd if item.amount else 0
+        total = float(item["amount"]) * float(price_usd) if item["amount"] else 0
         # Ajouter au total global
-        crypto_total += total
+        crypto_total += float(total)
 
         # Mettre à jour la valeur lastprice dans la base de données
-        update_item(int(item["cryptoid"]), {"lastprice": price_usd})
-        update_item(int(item["cryptoid"]), {"total": total})
-
-        # Comparer le prix avec les alertes
-        if item.alert3 and price_usd >= item.alert3:
-            alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 3 avec un prix de {price_usd} USD")
-        elif item.alert2 and price_usd >= item.alert2:
-            alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 2 avec un prix de {price_usd} USD")
-        elif item.alert1 and price_usd >= item.alert1:
-            alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 1 avec un prix de {price_usd} USD")
+        update_item(int(item["cryptoid"]), **{"lastprice": price_usd})
+        update_item(int(item["cryptoid"]), **{"total": total})
 
     print("=== Fin de la boucle ===")
     print(f"Total des cryptos : {crypto_total}")
-    print(f"Alertes générées : {alerts}")
 
     # Retourner les items et les prix des cryptomonnaies
     return {
         "crypto_prices": crypto_prices,
-        "alerts": alerts,
         "cryptototal": crypto_total
     }
 
+# Route alertes
+@app.get("/alerts")
+async def alerts_route():
+    """
+    Route pour vérifier les alertes des cryptomonnaies.
+    """
+    # Appeler la fonction read_all_items pour récupérer les items
+    items = read_all_items()
+
+    # Trace console pour afficher les items récupérés
+    print("=== Items Récupérés ===")
+    print(items)
+    data = json.loads(items)
+
+    # Initialiser une liste pour stocker les alertes
+    alerts = []
+
+    # Parcourir les items et effectuer les calculs
+    for item in data:
+
+
+
+         # Comparer le prix avec les alertes
+        if item["alert3"] and item["lastprice"] >= item["alert3"]:
+            alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 3 avec un prix de {item["lastprice"]} USD")
+        elif item["alert2"] and item["lastprice"] >= item["alert2"]:
+            alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 2 avec un prix de {item["lastprice"]} USD")
+        elif item["alert1"] and item["lastprice"] >= item["alert1"]:
+            alerts.append(f"Crypto {item["cryptoname"]} a atteint l'alerte 1 avec un prix de {item["lastprice"]} USD")
+
+    print("=== Fin de la boucle ===")
+    print(f"Alertes générées : {alerts}")
+
+    # Retourner les items et les prix des cryptomonnaies
+    return {
+        "alerts": alerts,
+    }
 

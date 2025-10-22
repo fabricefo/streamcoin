@@ -6,7 +6,8 @@ import os
 # Ajoute le dossier racine du projet au chemin d'import
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from fastapi_app.server import app  
+from fastapi_app.server import app # Importer l'application FastAPI  
+from fastapi_app import db  # Importer le module db pour accéder aux fonctions de la base de données
 
 client = TestClient(app)
 

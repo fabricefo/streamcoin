@@ -1,0 +1,41 @@
+name: Build and Push Docker Images
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+
+      - name: Create .env file from secrets
+        run: |
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
+
+      - name: Login to Dockerhub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image for Streamlit app
+        uses: docker/build-push-action@v2
+        with:
+          context: ./streamlit
+          push: true
+          file: ./streamlit/Dockerfile
+          tags: ffourel/streamlit_app:latest
+
+      - name: Build and push Docker image for FastAPI app
+        uses: docker/build-push-action@v2
+        with:
+          context: ./fastapi
+          push: true
+          file: ./fastapi/Dockerfile
+          tags: ffourel/fastapi_app:latest

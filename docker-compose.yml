@@ -7,6 +7,8 @@ services:
       - deploy_network
       - postgresql_default
     container_name: streamcoinapi
+    env_file:
+      - .env
 
   streamlit:
     build: streamlit/
@@ -16,6 +18,8 @@ services:
       - deploy_network
       - postgresql_default
     container_name: streamcoinapp
+    env_file:
+      - .env
 
 networks:
   deploy_network:

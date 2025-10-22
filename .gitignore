@@ -2,4 +2,3 @@
 .devcontainer/
 *.pyc
 .env
-config.py

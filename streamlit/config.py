@@ -1,12 +1,21 @@
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
+
+import os
+from dotenv import load_dotenv
+
+# Charge les variables depuis le fichier .env
+load_dotenv()
+
+
 # Récupérer les informations de connexion depuis les variables d'environnement
-DB_HOST = "localhost"
-DB_NAME = "crypto"
-DB_USER = "root"
-DB_PASSWORD = "root"
-DB_PORT = "5433"
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_PORT = os.getenv("DB_PORT")
+
 
 # Fonction pour se connecter à PostgreSQL
 def get_connection():

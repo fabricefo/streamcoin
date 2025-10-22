@@ -1,0 +1,32 @@
+name: Deploy to VPS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_IP }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          script: |
+            if [ ! -d "/opt/streamcoin" ]; then
+              git clone https://github.com/fabricefo/streamcoin.git /opt/streamcoin
+            else
+              cd /opt/streamcoin
+              git pull origin main
+            fi
+
+            cd /opt/streamcoin
+
+            docker pull ffourel/streamlit_app:latest
+            docker pull ffourel/fastapi_app:latest
+
+            docker compose up -d --build

@@ -60,6 +60,15 @@ jobs:
             fi
 
             cd /opt/streamcoin
+            
+            echo "📝 Création du fichier .env..."
+            cat <<EOF > .env
+            DB_HOST=${{ secrets.DB_HOST }}
+            DB_NAME=${{ secrets.DB_NAME }}
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DB_PORT=${{ secrets.DB_PORT }}
+            EOF
 
             echo "📦 Pull des dernières images Docker..."
             docker pull ffourel/streamlit_app:latest

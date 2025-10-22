@@ -17,16 +17,28 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
+            set -e  # Arrête le script en cas d'erreur
+
+            echo "🔍 Vérification du dossier /opt/streamcoin..."
             if [ ! -d "/opt/streamcoin" ]; then
+              echo "📥 Clonage du dépôt..."
               git clone https://github.com/fabricefo/streamcoin.git /opt/streamcoin
             else
+              echo "🔄 Mise à jour du dépôt..."
               cd /opt/streamcoin
               git pull origin main
             fi
 
             cd /opt/streamcoin
 
+            echo "📦 Pull des dernières images Docker..."
             docker pull ffourel/streamlit_app:latest
             docker pull ffourel/fastapi_app:latest
 
+            echo "🛑 Arrêt des containers existants..."
+            docker compose down
+
+            echo "🚀 Lancement des containers mis à jour..."
             docker compose up -d --build
+
+            echo "✅ Déploiement terminé avec succès."

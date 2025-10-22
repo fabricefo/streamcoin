@@ -158,3 +158,13 @@ async def top5_route():
     """
     top5 = get_top5_cryptos()
     return top5
+
+# Route pour récupérer le total des cryptomonnaies
+@app.get("/total") 
+async def total_route():
+    """
+    Route pour récupérer le total des cryptomonnaies.
+    """
+    from db import get_total_crypto  # Importer la fonction depuis db.py
+    total = get_total_crypto()
+    return {"cryptototal": total}

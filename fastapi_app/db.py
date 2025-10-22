@@ -39,6 +39,15 @@ def get_top5_cryptos():
             cur.execute(query)
             rows = cur.fetchall()
             return json.dumps(rows, indent=4, default=str)
+        
+# Fonction pour obtenir le total des cryptomonnaies
+def get_total_crypto():
+    query = "SELECT SUM(total) as cryptototal FROM portfolio"
+    with get_connection() as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+            cur.execute(query)
+            row = cur.fetchone()
+            return row['cryptototal']
 
 # Tester la fonction read_all_items
 if __name__ == "__main__":

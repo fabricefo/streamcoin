@@ -1,8 +1,8 @@
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel, ConfigDict
 from typing import List
-from fastapi_app.db import read_all_items, update_item, get_top5_cryptos
-#from db import read_all_items, update_item, get_top5_cryptos  # Importer la fonction depuis db.py
+#from fastapi_app.db import read_all_items, update_item, get_top5_cryptos
+from db import read_all_items, update_item, get_top5_cryptos  # Importer la fonction depuis db.py
 import httpx
 import json
 

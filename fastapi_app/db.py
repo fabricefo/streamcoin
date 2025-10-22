@@ -4,7 +4,7 @@ from psycopg2.extras import RealDictCursor
 import json
 
 # Importer la fonction get_connection depuis config.py
-from fastapi_app.config import get_connection
+from config import get_connection
        
 
 # Fonction pour lire tous les éléments

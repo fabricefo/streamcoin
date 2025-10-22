@@ -1,4 +1,4 @@
-name: Deploy to VPS
+name: Build, Push Docker Images and Deploy to VPS
 
 on:
   workflow_dispatch:

@@ -1,5 +1,12 @@
 from fastapi.testclient import TestClient
-from fastapi_app.server import app  # Assure-toi que le fichier s'appelle main.py
+
+import sys
+import os
+
+# Ajoute le dossier racine du projet au chemin d'import
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from fastapi_app.server import app  
 
 client = TestClient(app)
 

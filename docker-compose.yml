@@ -1,6 +1,6 @@
 services:
   fastapi:
-    build: fastapi/
+    build: fastapi_app/
     ports: 
       - 8502:8000
     networks:

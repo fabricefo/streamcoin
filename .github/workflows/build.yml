@@ -35,7 +35,7 @@ jobs:
       - name: Build and push Docker image for FastAPI app
         uses: docker/build-push-action@v2
         with:
-          context: ./fastapi
+          context: ./fastapi_app
           push: true
-          file: ./fastapi/Dockerfile
+          file: ./fastapi_app/Dockerfile
           tags: ffourel/fastapi_app:latest

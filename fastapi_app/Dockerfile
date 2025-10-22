@@ -3,15 +3,15 @@ FROM tiangolo/uvicorn-gunicorn:python3.9
 ARG DB_PASSWORD
 ENV DB_PASSWORD=$DB_PASSWORD
 
-RUN mkdir /fastapi
+RUN mkdir /fastapi_app
 
-COPY requirements.txt /fastapi
+COPY requirements.txt /fastapi_app
 
-WORKDIR /fastapi
+WORKDIR /fastapi_app
 
 RUN pip install -r requirements.txt
 
-COPY . /fastapi
+COPY . /fastapi_app
 
 
 

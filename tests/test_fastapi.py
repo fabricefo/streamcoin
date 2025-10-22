@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from main import app  # Assure-toi que le fichier s'appelle main.py
+from fastapi_app.server import app  # Assure-toi que le fichier s'appelle main.py
 
 client = TestClient(app)
 

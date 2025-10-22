@@ -21,7 +21,7 @@ def test_get_all_items_route(monkeypatch):
     def mock_read_all_items():
         return [{"cryptoid": 1, "cryptoname": "Bitcoin", "coingeckoid": "bitcoin"}]
 
-    monkeypatch.setattr("main.read_all_items", mock_read_all_items)
+    monkeypatch.setattr("fastapi_app.server.read_all_items", mock_read_all_items)
 
     response = client.get("/items")
     assert response.status_code == 200
@@ -32,7 +32,7 @@ def test_top5_route(monkeypatch):
     def mock_get_top5_cryptos():
         return [{"cryptoname": "Bitcoin", "total": 10000}, {"cryptoname": "Ethereum", "total": 8000}]
 
-    monkeypatch.setattr("main.get_top5_cryptos", mock_get_top5_cryptos)
+    monkeypatch.setattr("fastapi_app.server.get_top5_cryptos", mock_get_top5_cryptos)
 
     response = client.get("/top5")
     assert response.status_code == 200

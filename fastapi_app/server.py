@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException, Depends
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import List
-from db import read_all_items, update_item, get_top5_cryptos  # Importer la fonction depuis db.py
+from fastapi_app.db import read_all_items, update_item, get_top5_cryptos
+#from db import read_all_items, update_item, get_top5_cryptos  # Importer la fonction depuis db.py
 import httpx
 import json
 
@@ -14,6 +15,8 @@ app = FastAPI(
 
 # Modèle Pydantic pour les requêtes/réponses
 class Item(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     cryptoid: int
     cryptoname: str
     coingeckoid: str
@@ -25,9 +28,6 @@ class Item(BaseModel):
     lastprice: float 
     amount: float 
     total: float 
-
-    class Config:
-        orm_mode = True
 
 # Route d'accueil
 @app.get("/")

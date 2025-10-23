@@ -38,7 +38,9 @@ def read_root():
 @app.get("/items")
 async def get_all_items_route():
     items = read_all_items()
-    return items
+    return {
+        "cryptos": items
+    }
 
 # Fonction pour récupérer les prix des cryptomonnaies
 async def get_crypto_prices(cryptos: List[str] = ["bitcoin", "ethereum", "litecoin"]):
@@ -146,7 +148,7 @@ async def alerts_route():
 
     # Retourner les items et les prix des cryptomonnaies
     return {
-        "alerts": alerts,
+        "alerts": alerts
     }
 
 
@@ -157,7 +159,9 @@ async def top5_route():
     Route pour récupérer le Top 5 des cryptomonnaies par total décroissant.
     """
     top5 = get_top5_cryptos()
-    return top5
+    return {
+        "top5": top5
+    }
 
 # Route pour récupérer le total des cryptomonnaies
 @app.get("/total") 
@@ -167,4 +171,39 @@ async def total_route():
     """
     from db import get_total_crypto  # Importer la fonction depuis db.py
     total = get_total_crypto()
-    return {"cryptototal": total}
+    return {
+        "cryptototal": total
+    }
+
+@app.get("/main")
+async def main_route():
+    """
+    Route principale pour récupérer le Top 5, les alertes et le total des cryptomonnaies.
+    """
+    from db import get_total_crypto  # Importer la fonction depuis db.py
+
+    top5 = get_top5_cryptos()
+    total = get_total_crypto()
+
+    # Appeler la fonction read_all_items pour récupérer les items
+    items = read_all_items()
+    data = json.loads(items)
+
+    # Initialiser une liste pour stocker les alertes
+    alerts = []
+
+    # Parcourir les items et effectuer les calculs
+    for item in data:
+         # Comparer le prix avec les alertes
+        if item["alert3"] and item["lastprice"] >= item["alert3"]:
+            alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 3 avec un prix de {item['lastprice']} USD")
+        elif item["alert2"] and item["lastprice"] >= item["alert2"]:
+            alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 2 avec un prix de {item['lastprice']} USD")
+        elif item["alert1"] and item["lastprice"] >= item["alert1"]:
+            alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 1 avec un prix de {item['lastprice']} USD")
+
+    return {
+        "top5": top5,
+        "alerts": alerts,
+        "cryptototal": total
+    }

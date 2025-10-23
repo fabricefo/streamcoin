@@ -1,0 +1,3 @@
+- Add CoinGecko API Key to Env vars
+- Modify json outputs for top5
+- Modify main without updates : return top5, alerts and cryptotal

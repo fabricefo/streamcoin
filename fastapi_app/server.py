@@ -203,7 +203,9 @@ async def main_route():
             alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 1 avec un prix de {item['lastprice']} USD")
 
     return {
-        "top5": top5,
-        "alerts": alerts,
-        "cryptototal": total
+        "datas" [
+            "top5": top5,
+            "alerts": alerts,
+            "cryptototal": total
+        ]
     }

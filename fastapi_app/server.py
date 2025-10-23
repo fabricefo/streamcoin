@@ -195,7 +195,11 @@ async def main_route():
     # Parcourir les items et effectuer les calculs
     for item in data:
          # Comparer le prix avec les alertes
-        if item["alert3"] and item["lastprice"] >= item["alert3"]:
+        if item["alert5"] and item["lastprice"] >= item["alert5"]:
+            alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 3 avec un prix de {item['lastprice']} USD")
+        elif item["alert4"] and item["lastprice"] >= item["alert4"]:
+            alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 3 avec un prix de {item['lastprice']} USD")
+        elif item["alert3"] and item["lastprice"] >= item["alert3"]:
             alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 3 avec un prix de {item['lastprice']} USD")
         elif item["alert2"] and item["lastprice"] >= item["alert2"]:
             alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 2 avec un prix de {item['lastprice']} USD")
@@ -203,9 +207,9 @@ async def main_route():
             alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 1 avec un prix de {item['lastprice']} USD")
 
     return {
-        "datas" [
+        "datas": {
             "top5": top5,
             "alerts": alerts,
             "cryptototal": total
-        ]
+        }
     }

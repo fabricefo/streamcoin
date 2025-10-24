@@ -131,19 +131,28 @@ async def alerts_route():
     print(items)
     data = json.loads(items)
 
-    # Initialiser une liste pour stocker les alertes
-    alerts = []
-
-    # Liste des niveaux d'alerte du plus élevé au plus bas
     alert_levels = [("alert5", 5), ("alert4", 4), ("alert3", 3), ("alert2", 2), ("alert1", 1)]
 
-    for item in data:  # cryptos est ta liste de données
-        for alert_key, level in alert_levels:
-            if item.get(alert_key) and item["lastprice"] >= item[alert_key]:
-                alerts.append(
-                    f"Crypto {item['cryptoname']} a atteint l'alerte {level} avec un prix de {item['lastprice']} USD"
-                )
-                break  # On arrête dès qu'une alerte est déclenchée
+    alerts = []
+
+    for item in data:
+        try:
+            last_price = float(item.get("lastprice", 0))
+            
+            for alert_key, level in alert_levels:
+                alert_value = item.get(alert_key)
+                
+                if alert_value is not None:
+                    alert_threshold = float(alert_value)
+                    
+                    if last_price >= alert_threshold:
+                        alerts.append(
+                            f"Crypto {item['cryptoname']} a atteint l'alerte {level} avec un prix de {last_price:.2f} USD (seuil : {alert_threshold:.2f})"
+                        )
+                        break  # On arrête dès qu'une alerte est déclenchée
+        except (ValueError, TypeError) as e:
+            print(f"Erreur de conversion pour l'item {item.get('cryptoname', 'inconnu')} : {e}")
+
             
     print("=== Fin de la boucle ===")
     print(f"Alertes générées : {alerts}")
@@ -191,33 +200,27 @@ async def main_route():
     items = read_all_items()
     data = json.loads(items)
 
-    # Initialiser une liste pour stocker les alertes
-    alerts = []
-
-    # Parcourir les items et effectuer les calculs
-    # for item in data:
-         # Comparer le prix avec les alertes
-        # if item["alert5"] and item["lastprice"] >= item["alert5"]:
-        #     alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 3 avec un prix de {item['lastprice']} USD")
-        # elif item["alert4"] and item["lastprice"] >= item["alert4"]:
-        #     alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 3 avec un prix de {item['lastprice']} USD")
-        # elif item["alert3"] and item["lastprice"] >= item["alert3"]:
-        #     alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 3 avec un prix de {item['lastprice']} USD")
-        # elif item["alert2"] and item["lastprice"] >= item["alert2"]:
-        #     alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 2 avec un prix de {item['lastprice']} USD")
-        # elif item["alert1"] and item["lastprice"] >= item["alert1"]:
-        #     alerts.append(f"Crypto {item['cryptoname']} a atteint l'alerte 1 avec un prix de {item['lastprice']} USD")
-
-    # Liste des niveaux d'alerte du plus élevé au plus bas
     alert_levels = [("alert5", 5), ("alert4", 4), ("alert3", 3), ("alert2", 2), ("alert1", 1)]
 
-    for item in data:  # cryptos est ta liste de données
-        for alert_key, level in alert_levels:
-            if item.get(alert_key) and item["lastprice"] >= item[alert_key]:
-                alerts.append(
-                    f"Crypto {item['cryptoname']} a atteint l'alerte {level} avec un prix de {item['lastprice']} USD"
-                )
-                break  # On arrête dès qu'une alerte est déclenchée
+    alerts = []
+
+    for item in data:
+        try:
+            last_price = float(item.get("lastprice", 0))
+            
+            for alert_key, level in alert_levels:
+                alert_value = item.get(alert_key)
+                
+                if alert_value is not None:
+                    alert_threshold = float(alert_value)
+                    
+                    if last_price >= alert_threshold:
+                        alerts.append(
+                            f"Crypto {item['cryptoname']} a atteint l'alerte {level} avec un prix de {last_price:.2f} USD (seuil : {alert_threshold:.2f})"
+                        )
+                        break  # On arrête dès qu'une alerte est déclenchée
+        except (ValueError, TypeError) as e:
+            print(f"Erreur de conversion pour l'item {item.get('cryptoname', 'inconnu')} : {e}")
 
     return {
         "datas": {

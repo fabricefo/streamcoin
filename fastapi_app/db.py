@@ -2,6 +2,7 @@ import psycopg2
 from psycopg2 import sql
 from psycopg2.extras import RealDictCursor
 import json
+import logging
 
 # Importer la fonction get_connection depuis config.py
 from config import get_connection
@@ -31,6 +32,21 @@ def update_item(cryptoid, **kwargs):
             conn.commit()
             return cur.rowcount
 
+# Fonction pour insérer un historique
+def insert_history(total):
+    query = "INSERT INTO history (historydate, total) VALUES (now(), %s)"
+
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(query, (total,))
+                conn.commit()
+                return cur.rowcount
+    except Exception as e:
+        logging.error(f"Erreur lors de l'insertion dans la table history : {e}")
+        return None
+
+        
 # Fonction pour lister le Top 5 des cryptomonnaies par total décroissant
 def get_top5_cryptos():
     query = "SELECT * FROM portfolio ORDER BY total DESC LIMIT 5"

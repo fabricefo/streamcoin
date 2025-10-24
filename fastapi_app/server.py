@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel, ConfigDict
 from typing import List
 #from fastapi_app.db import read_all_items, update_item, get_top5_cryptos
-from db import read_all_items, update_item, get_top5_cryptos  # Importer la fonction depuis db.py
+from db import read_all_items, update_item, get_top5_cryptos, insert_history # Importer la fonction depuis db.py
 import httpx
 import json
 
@@ -108,6 +108,8 @@ async def update_prices_route():
 
     print("=== Fin de la boucle ===")
     print(f"Total des cryptos : {crypto_total}")
+
+    insert_history(crypto_total)
 
     # Retourner les items et les prix des cryptomonnaies
     return {
